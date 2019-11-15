@@ -1,0 +1,14 @@
+<h1 id="tableLabel">Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+<div class='table-responsive' *ngIf='gauges && gauges.length'>
+
+  <google-chart *ngFor="let gauge of gauges" #chart
+                [title]="title"
+                [type]="type"
+                [data]="gauge.labels"
+                [options]="gauge.options"
+                [width]="width"
+                [height]="height">
+  </google-chart>
+</div>
