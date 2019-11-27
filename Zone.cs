@@ -10,5 +10,6 @@ namespace SmartHomeApp
         public float Max { get; set; }
         public float Target { get; set; }
         public float Range { get; set; }
+        public bool Heating { get; set; }
     }
 }

@@ -1,16 +1,24 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { interval, Subscription } from 'rxjs';
+import { interval, Subscription, Observable} from 'rxjs';
 
-@Component({
-  selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html'
+@Injectable({
+  providedIn: 'root'
 })
 
-export class FetchDataComponent implements OnInit {
-    type = 'Gauge';
+@Component({
+  selector: 'app-zone-current',
+  templateUrl: './zone-current.component.html'
+})
 
-    public gauges: IGauge[];
+export class ZoneCurrentComponent implements OnInit {
+  imageWidth: number = 50;
+  imageMargin: number = 2;
+  flameLocation: string = "assets/images/flame.png"
+  
+  type = 'Gauge';
+
+    public gauges: Observable<IGauge[]>;
 
     private returnedZones: IZone[];
 
@@ -19,6 +27,7 @@ export class FetchDataComponent implements OnInit {
     constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) {}
 
     ngOnInit() {
+    
 
       this.updateStats();
       this.updateSubscription = interval(2000).subscribe(
@@ -33,9 +42,8 @@ export class FetchDataComponent implements OnInit {
 
   private updateStats() {
 
-    this.http.get<IZone[]>(this.baseUrl + 'zone').subscribe(result => {
-        this.returnedZones = result;
-      }, error => console.error(error));
+    this.http.get<IZone[]>(this.baseUrl + 'zone' ).subscribe(result => 
+        { this.returnedZones = result; }, error => console.error(error));
 
     if (this.returnedZones && this.returnedZones.length) {
       this.gauges = [];
@@ -55,7 +63,8 @@ export class FetchDataComponent implements OnInit {
             minorTicks: 2,
             min: zone.min,
             max: zone.max
-          }
+          },
+          heating: zone.heating
         });
       });
     };
@@ -69,6 +78,7 @@ interface IZone {
     range: number | 1;
     target: number | 1;
     temperature: number | 1;
+    heating: boolean;
 }
 
 interface IGaugeOptions {
@@ -89,4 +99,5 @@ interface IGaugeOptions {
 interface IGauge {
   options: IGaugeOptions;
   labels: (string | number )[][];
+  heating: boolean;
 }

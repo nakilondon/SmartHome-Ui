@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,11 +10,6 @@ namespace SmartHomeApp.Controllers
     [Route("[controller]")]
     public class ZoneController : ControllerBase
     {
-        private static readonly string[] Names = new[]
-        {
-            "Nick's", "Master", "Hall", "Study", "Dinning", "Living", "Kitchen"
-        };
-
         private readonly ILogger<WeatherForecastController> _logger;
         private readonly IZoneDataStore _zoneDataStore;
 
@@ -29,16 +20,14 @@ namespace SmartHomeApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Zone>> Get()
+        public async Task<IEnumerable<Zone>> GetAll()
         {
-            var rng = new Random();
+            _logger.LogDebug("GetAll");
             var zones = new List<Zone>();
             var zoneDetailsDb = await _zoneDataStore.GetAllZones();
 
             foreach (var zoneDetailDb in zoneDetailsDb)
             {
-                var target = rng.Next(15, 22);
-
                 zones.Add(new Zone
                 {
                     Name = zoneDetailDb.ZoneName,
@@ -46,7 +35,8 @@ namespace SmartHomeApp.Controllers
                     Min = zoneDetailDb.Min,
                     Max = zoneDetailDb.Max,
                     Target = zoneDetailDb.Target,
-                    Range = zoneDetailDb.TargetRange + zoneDetailDb.Target
+                    Range = zoneDetailDb.TargetRange + zoneDetailDb.Target,
+                    Heating = zoneDetailDb.Heating
                 });
             }
             return zones;

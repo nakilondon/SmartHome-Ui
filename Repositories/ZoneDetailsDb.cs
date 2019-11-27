@@ -16,6 +16,7 @@ namespace SmartHomeApp.Repositories
         public float Min { get; set; }
         public float Max { get; set; }
         public float TargetRange { get; set; }
+        public bool Heating { get; set; }
         public override string ToString()
         {
             return $"ZoneId: {ZoneId}\tZoneName: {ZoneName}\tSensorId: {SensorId}\tCurrentTemperature: {CurrentTemperature}\tLastUpdate: {LastUpDate}";
