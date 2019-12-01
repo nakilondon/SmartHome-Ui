@@ -1,0 +1,101 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <form novalidate
+          (ngSubmit)="saveZone()"
+          [formGroup]="zoneForm">
+
+      <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="zoneNameId">Zone Name</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="zoneNameId"
+                 type="text"
+                 placeholder="Name (required)"
+                 formControlName="zoneName"
+                 [ngClass]="{'is-invalid': displayMessage.zoneName }" />
+          <span class="invalid-feedback">
+            {{displayMessage.zoneName}}
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 form-check-label"
+               for="useSensorId">Use Sensor</label>
+        <div class="col-md-8">
+          <div class="form-check">
+            <input class="form-check-input"
+                   id="useSensorId"
+                   type="checkbox"
+                   formControlName="useSensor">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="zoneForm.get('useSensor').value" class="form-group row mb-2">
+          <label class="col-md-2 col-form-label"
+                 for="sensorIdId">Sensor Id</label>
+  
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="sensorIdId"
+                   type="number"
+                   formControlName="sensorId"
+                   [ngClass]="{'is-invalid': displayMessage.sensorId}" />
+            <span class="invalid-feedback">
+              {{displayMessage.sensorId}}
+            </span>
+          </div>
+        </div>
+        <div *ngIf="zoneForm.get('useSensor').value" class="form-group row mb-2">
+            <label class="col-md-2 col-form-label"
+                   for="rangeId">Cut Off Above</label>
+    
+            <div class="col-md-8">
+              <input class="form-control"
+                     id="rangeId"
+                     type="text"
+                     formControlName="range"
+                     [ngClass]="{'is-invalid': displayMessage.range}" />
+              <span class="invalid-feedback">
+                {{displayMessage.range}}
+              </span>
+            </div>
+          </div>
+
+
+      <div class="form-group row mb-2">
+        <div class="offset-md-2 col-md-4">
+          <button class="btn btn-primary mr-3"
+                  style="width:80px;"
+                  type="submit"
+                  [title]="zoneForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                  [disabled]="!zoneForm.valid">
+            Save
+          </button>
+          <button class="btn btn-outline-secondary mr-3"
+                  style="width:80px;"
+                  type="button"
+                  title="Cancel your edits"
+                  [routerLink]="['/zones']">
+            Cancel
+          </button>
+          <button class="btn btn-outline-warning"
+                  style="width:80px"
+                  type="button"
+                  title="Delete this zone"
+                  (click)="deleteZone()">
+            Delete
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
+</div>
