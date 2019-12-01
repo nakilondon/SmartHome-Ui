@@ -1,33 +1,26 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { GoogleChartsModule } from 'angular-google-charts';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatButtonModule, MatCardModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { ZoneCurrentComponent } from './zone-current/zone-current.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WelcomeComponent } from './home/welcome.component';
+import { ZoneModule } from './zones/zone.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ZoneCurrentComponent
+    WelcomeComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
-    FormsModule,
-    FlexLayoutModule,
-    MatButtonModule,
-    MatCardModule,
-    GoogleChartsModule.forRoot(),
     RouterModule.forRoot([
-      { path: '**', component: ZoneCurrentComponent }
+      { path: 'welcome', component: WelcomeComponent },
+      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+      { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
-    BrowserAnimationsModule
+    ZoneModule
   ],
   bootstrap: [AppComponent]
 })

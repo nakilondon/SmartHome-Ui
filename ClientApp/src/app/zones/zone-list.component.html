@@ -1,0 +1,45 @@
+<div class="card">
+  <div class="card-header">
+    {{pageTitle}}
+  </div>
+
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table mb-0"
+             *ngIf="zones && zones.length">
+        <thead>
+          <tr>
+            <th>Zone</th>
+            <th>Temperature</th>
+            <th>Last Update</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let zone of zones">
+            <td>
+              <a [routerLink]="['/zones', zone.id]">
+                {{ zone.zoneName }}
+              </a>
+            </td>
+            <td *ngIf="zone.useSensor" >{{ zone.currentTemperature }}</td>
+            <td *ngIf="!zone.useSensor" >n/a</td>
+            <td *ngIf="zone.useSensor" >{{ zone.lastUpdate }}</td>
+            <td *ngIf="!zone.useSensor" >n/a</td>
+            <td>
+              <button class="btn btn-outline-primary btn-sm"
+                      [routerLink]="['/zones', zone.id, 'edit']">
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="errorMessage"
+     class="alert alert-danger">
+  Error: {{ errorMessage }}
+</div>

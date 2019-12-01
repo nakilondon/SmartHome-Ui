@@ -1,0 +1,68 @@
+<div class="card">
+  <div class="card-header"
+       *ngIf="zone">
+    {{pageTitle + ": " + zone.zoneName}}
+  </div>
+
+  <div class="card-body"
+       *ngIf="zone">
+
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-3">Name:</div>
+          <div class="col-md-6">{{zone.zoneName}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Sensor:</div>
+          <div class="col-md-6">{{zone.sensorId}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Temperature:</div>
+          <div class="col-md-6">{{zone.currentTemperature}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Maximum:</div>
+          <div class="col-md-6">{{zone.maxTemperature}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Minimum:</div>
+          <div class="col-md-6">{{zone.minTemperature}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Range:</div>
+          <div class="col-md-6">{{zone.range}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Last Update:</div>
+          <div class="col-md-6">{{zone.lastUpdate}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Active:</div>
+          <div class="col-md-6">{{zone.active}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <button class="btn btn-outline-secondary mr-3"
+                style="width:80px"
+                (click)="onBack()">
+          <i class="fa fa-chevron-left"></i> Back
+        </button>
+        <button class="btn btn-outline-primary"
+                style="width:80px"
+                [routerLink]="['/zones', zone.id, 'edit']">
+          Edit
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="alert alert-danger"
+       *ngIf="errorMessage">{{errorMessage}}
+  </div>
+</div>
