@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, fromEvent, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { Zone } from './zone';
+import { IZone as Zone } from './zone';
 import { ZoneService } from './zone.service';
 
 import { NumberValidators } from '../shared/number.validator';

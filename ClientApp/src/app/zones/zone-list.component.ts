@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Zone } from './zone';
+import { IZone as Zone } from './zone';
 import { ZoneService } from './zone.service';
 
 @Component({

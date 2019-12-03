@@ -7,9 +7,9 @@ namespace SmartHomeApp.Repositories
 {
     public class ZoneDetailsDb
     {
-        public int ZoneId { get; set; }
+        public short ZoneId { get; set; }
         public string ZoneName { get; set; }
-        public int SensorId { get; set; }
+        public short SensorId { get; set; }
         public DateTime LastUpDate { get; set; }
         public float CurrentTemperature { get; set; }
         public float Target { get; set; }

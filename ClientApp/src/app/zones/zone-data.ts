@@ -1,11 +1,11 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import { Zone } from './zone';
+import { IZone as Zone } from './zone';
 
 export class ZoneData implements InMemoryDbService {
 
   createDb() {
-    const zones: Zone[] = [
+      const zones: Zone[] = [
       {
         id: 1,
         zoneName: 'Nick\'s',
@@ -13,6 +13,7 @@ export class ZoneData implements InMemoryDbService {
         useSensor: true,
         active: true,
         currentTemperature: 21.2,
+        target: 22,
         maxTemperature: 25.0,
         minTemperature: 12.1,
         range: 0.5,
@@ -25,6 +26,7 @@ export class ZoneData implements InMemoryDbService {
         useSensor: true,
         active: true,
         currentTemperature: 20.2,
+        target: 22,
         maxTemperature: 24.0,
         minTemperature: 13.1,
         range: 0.5,
@@ -37,6 +39,7 @@ export class ZoneData implements InMemoryDbService {
         useSensor: true,
         active: true,
         currentTemperature: 18.2,
+        target: 22,
         maxTemperature: 20.0,
         minTemperature: 9.1,
         range: 0.5,
@@ -49,6 +52,7 @@ export class ZoneData implements InMemoryDbService {
         useSensor: true,
         active: true,
         currentTemperature: 19.2,
+        target: 22,
         maxTemperature: 20.0,
         minTemperature: 8.1,
         range: 0.5,
@@ -61,6 +65,7 @@ export class ZoneData implements InMemoryDbService {
         useSensor: false,
         active: true,
         currentTemperature: 0,
+        target: 0,
         maxTemperature: 0,
         minTemperature: 0,
         range: 0,

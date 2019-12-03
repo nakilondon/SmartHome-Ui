@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 
-import { Zone } from './zone';
+import { IZone as Zone } from './zone';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ZoneService {
-  private zonesUrl = 'api/zones';
+  constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
 
-  constructor(private http: HttpClient) { }
+  private zonesUrl = this.baseUrl;
 
   getZones(): Observable<Zone[]> {
-    return this.http.get<Zone[]>(this.zonesUrl)
+      return this.http.get<Zone[]>(this.zonesUrl + 'zone')
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
@@ -26,7 +26,7 @@ export class ZoneService {
     if (id === 0) {
       return of(this.initializeZone());
     }
-    const url = `${this.zonesUrl}/${id}`;
+    const url = `${this.zonesUrl}zone/${id}`;
     return this.http.get<Zone>(url)
       .pipe(
         tap(data => console.log('getZone: ' + JSON.stringify(data))),
@@ -36,8 +36,10 @@ export class ZoneService {
 
   createZone(zone: Zone): Observable<Zone> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    zone.id = null;
-    return this.http.post<Zone>(this.zonesUrl, zone, { headers })
+   // zone.id = null;
+      zone.lastUpdate = '15/11/2019 22:05:05';
+
+    return this.http.post<Zone>(this.zonesUrl + "zone/add", zone, { headers })
       .pipe(
         tap(data => console.log('createZone: ' + JSON.stringify(data))),
         catchError(this.handleError)
@@ -55,9 +57,9 @@ export class ZoneService {
   }
 
   updateZone(zone: Zone): Observable<Zone> {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.zonesUrl}/${zone.id}`;
-    return this.http.put<Zone>(url, zone, { headers })
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Accept': 'application/json' });
+      const url = `${this.zonesUrl}zone/update`;
+      return this.http.post<Zone>(url, zone, { headers })
       .pipe(
         tap(() => console.log('updateZone: ' + zone.id)),
         // Return the zone on an update
@@ -91,6 +93,7 @@ export class ZoneService {
       useSensor: true,
       active: true,
       currentTemperature: 0,
+      target: 0,
       maxTemperature: 0,
       minTemperature: 0,
       range: 0.5,

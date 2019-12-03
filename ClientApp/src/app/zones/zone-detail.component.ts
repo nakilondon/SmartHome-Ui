@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Zone } from './zone';
+import { IZone as Zone } from './zone';
 import { ZoneService } from './zone.service';
 
 @Component({
