@@ -40,7 +40,11 @@ export class ZoneEditComponent implements OnInit, AfterViewInit, OnDestroy {
       zoneName: {
         required: 'Zone name is required.',
         minlength: 'Zone name must be at least three characters.',
-        maxlength: 'Zone name cannot exceed 50 characters.'
+        maxlength: 'Zone name cannot exceed 20 characters.'
+      },
+      mqttTopic: {
+        required: 'MQTT Topic is required.',
+        minlength: 'MQTT Topic must be at least three characters.', maxlength: 'MQTT Topic cannot exceed 20 characters.'
       },
       sensorId: {
         range: 'Sensor Id must be between 1 (lowest) and 255 (highest).'
@@ -58,8 +62,12 @@ export class ZoneEditComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.zoneForm = this.fb.group({
       zoneName: ['', [Validators.required,
-                         Validators.minLength(3),
-                         Validators.maxLength(20)]],
+        Validators.minLength(3),
+        Validators.maxLength(20)]],
+      mqttTopic: ['', [Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20)]],
+      active: true,
       useSensor: true,
       sensorId: [1, NumberValidators.range(1, 255)],
       range: [0.5, [NumberValidators.range(0.1, 1.5)]]
@@ -116,6 +124,8 @@ export class ZoneEditComponent implements OnInit, AfterViewInit, OnDestroy {
     // Update the data on the form
     this.zoneForm.patchValue({
       zoneName: this.zone.zoneName,
+      mqttTopic: this.zone.mqttTopic,
+      active: this.zone.active,
       useSensor: this.zone.useSensor,
       sensorId: this.zone.sensorId,
       range: this.zone.range

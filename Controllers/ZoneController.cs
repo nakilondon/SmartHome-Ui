@@ -74,5 +74,11 @@ namespace SmartHomeApp.Controllers
 
             return _mapper.Map<Zone>(await _zoneDataStore.GetZone(zone.Id));
         }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(short id)
+        {
+            await _zoneDataStore.DeleteZone(id);
+        }
     }
 }

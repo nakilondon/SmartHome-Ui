@@ -48,7 +48,7 @@ export class ZoneService {
 
   deleteZone(id: number): Observable<{}> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.zonesUrl}/${id}`;
+    const url = `${this.zonesUrl}zone/${id}`;
     return this.http.delete<Zone>(url, { headers })
       .pipe(
         tap(data => console.log('deleteZone: ' + id)),
@@ -89,6 +89,7 @@ export class ZoneService {
     return {
       id: 0,
       zoneName: null,
+      mqttTopic: null,
       sensorId: 0,
       useSensor: true,
       active: true,

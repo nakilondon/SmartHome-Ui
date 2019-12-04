@@ -14,6 +14,14 @@
           <div class="col-md-3">Name:</div>
           <div class="col-md-6">{{zone.zoneName}}</div>
         </div>
+        <div class="row">
+          <div class="col-md-3">Zone ID:</div>
+          <div class="col-md-6">{{zone.id}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">MQTT Topic:</div>
+          <div class="col-md-6">{{zone.mqttTopic}}</div>
+        </div>
         <div *ngIf="zone.useSensor" class="row">
           <div class="col-md-3">Sensor:</div>
           <div class="col-md-6">{{zone.sensorId}}</div>
@@ -34,13 +42,17 @@
           <div class="col-md-3">Range:</div>
           <div class="col-md-6">{{zone.range}}</div>
         </div>
-        <div *ngIf="zone.useSensor" class="row">
-          <div class="col-md-3">Last Update:</div>
-          <div class="col-md-6">{{zone.lastUpdate}}</div>
-        </div>
         <div class="row">
           <div class="col-md-3">Active:</div>
           <div class="col-md-6">{{zone.active}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Heating:</div>
+          <div class="col-md-6">{{zone.heating}}</div>
+        </div>
+        <div *ngIf="zone.useSensor" class="row">
+          <div class="col-md-3">Last Update:</div>
+          <div class="col-md-6">{{zone.lastUpdate}}</div>
         </div>
       </div>
     </div>

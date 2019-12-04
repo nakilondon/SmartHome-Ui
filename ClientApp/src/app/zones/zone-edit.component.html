@@ -24,6 +24,33 @@
         </div>
       </div>
       <div class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="mqqtTopicId">MQTT Topic</label>
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="mqttTopicId"
+                 type="text"
+                 placeholder="MQTT Topic (required)"
+                 formControlName="mqttTopic"
+                 [ngClass]="{'is-invalid': displayMessage.mqttTopic }" />
+          <span class="invalid-feedback">
+            {{displayMessage.mqttTopic}}
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
+        <label class="col-md-2 form-check-label"
+               for="activeId">Active</label>
+        <div class="col-md-8">
+          <div class="form-check">
+            <input class="form-check-input"
+                   id="activeId"
+                   type="checkbox"
+                   formControlName="active">
+          </div>
+        </div>
+      </div>
+      <div class="form-group row mb-2">
         <label class="col-md-2 form-check-label"
                for="useSensorId">Use Sensor</label>
         <div class="col-md-8">
@@ -36,36 +63,36 @@
         </div>
       </div>
       <div *ngIf="zoneForm.get('useSensor').value" class="form-group row mb-2">
-          <label class="col-md-2 col-form-label"
-                 for="sensorIdId">Sensor Id</label>
-  
-          <div class="col-md-8">
-            <input class="form-control"
-                   id="sensorIdId"
-                   type="number"
-                   formControlName="sensorId"
-                   [ngClass]="{'is-invalid': displayMessage.sensorId}" />
-            <span class="invalid-feedback">
-              {{displayMessage.sensorId}}
-            </span>
-          </div>
+        <label class="col-md-2 col-form-label"
+               for="sensorIdId">Sensor Id</label>
+
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="sensorIdId"
+                 type="number"
+                 formControlName="sensorId"
+                 [ngClass]="{'is-invalid': displayMessage.sensorId}" />
+          <span class="invalid-feedback">
+            {{displayMessage.sensorId}}
+          </span>
         </div>
-        <div *ngIf="zoneForm.get('useSensor').value" class="form-group row mb-2">
-            <label class="col-md-2 col-form-label"
-                   for="rangeId">Cut Off Above</label>
-    
-            <div class="col-md-8">
-              <input class="form-control"
-                     id="rangeId"
-                     type="number"
-                     step="0.1"
-                     formControlName="range"
-                     [ngClass]="{'is-invalid': displayMessage.range}" />
-              <span class="invalid-feedback">
-                {{displayMessage.range}}
-              </span>
-            </div>
-          </div>
+      </div>
+      <div *ngIf="zoneForm.get('useSensor').value" class="form-group row mb-2">
+        <label class="col-md-2 col-form-label"
+               for="rangeId">Cut Off Above</label>
+
+        <div class="col-md-8">
+          <input class="form-control"
+                 id="rangeId"
+                 type="number"
+                 step="0.1"
+                 formControlName="range"
+                 [ngClass]="{'is-invalid': displayMessage.range}" />
+          <span class="invalid-feedback">
+            {{displayMessage.range}}
+          </span>
+        </div>
+      </div>
 
 
       <div class="form-group row mb-2">

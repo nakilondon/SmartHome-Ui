@@ -2,6 +2,7 @@
 export interface IZone {
   id: number;
   zoneName: string;
+  mqttTopic: string;
   useSensor: boolean;
   sensorId: number;
   active: boolean;

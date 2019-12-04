@@ -9,6 +9,7 @@ export class ZoneData implements InMemoryDbService {
       {
         id: 1,
         zoneName: 'Nick\'s',
+        mqttTopic: 'nicksRoom',
         sensorId: 236,
         useSensor: true,
         active: true,
@@ -22,6 +23,7 @@ export class ZoneData implements InMemoryDbService {
       {
         id: 2,
         zoneName: 'Master',
+        mqttTopic: 'master',
         sensorId: 78,
         useSensor: true,
         active: true,
@@ -35,6 +37,7 @@ export class ZoneData implements InMemoryDbService {
       {
         id: 5,
         zoneName: 'Dinning',
+        mqttTopic: 'dinnigRoom',
         sensorId: 23,
         useSensor: true,
         active: true,
@@ -48,6 +51,7 @@ export class ZoneData implements InMemoryDbService {
       {
         id: 8,
         zoneName: 'Living',
+        mqttTopic: 'livingRoom',
         sensorId: 86,
         useSensor: true,
         active: true,
@@ -61,6 +65,7 @@ export class ZoneData implements InMemoryDbService {
       {
         id: 10,
         zoneName: 'Bathroom',
+        mqttTopic: 'bathRoom',
         sensorId: null,
         useSensor: false,
         active: true,

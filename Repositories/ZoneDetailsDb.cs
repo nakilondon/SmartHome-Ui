@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SmartHomeApp.Repositories
 {
@@ -9,6 +6,9 @@ namespace SmartHomeApp.Repositories
     {
         public short ZoneId { get; set; }
         public string ZoneName { get; set; }
+        public string MqttTopic { get; set; }
+        public bool Active { get; set; }
+        public bool UseSensor { get; set; }
         public short SensorId { get; set; }
         public DateTime LastUpDate { get; set; }
         public float CurrentTemperature { get; set; }

@@ -9,5 +9,6 @@ namespace SmartHomeApp.Repositories
         Task<ZoneDetailsDb> GetZone(short zoneId);
         Task<ZoneDetailsDb> UpdateZone(ZoneDetailsDb zoneDetails);
         Task<ZoneDetailsDb> AddZone(ZoneDetailsDb zoneDetails);
+        Task DeleteZone(short zoneId);
     }
 }

@@ -38,16 +38,8 @@ namespace SmartHomeApp.Repositories
 
             using IDbConnection db = new MySqlConnection(_connectionString);
             await db.ExecuteAsync(
-            //"UPDATE ZoneDetails SET ZoneName = @zoneName, SensorId = @sensorId, LastUpdate = @lastUpdate, CurrentTemperature = @curTemp, Target = @target, Min = @min, Max = @max, TargetRange = @range, Heating = @Heating WHERE ZoneId = @id",
-            //new
-            //{
-            //    id = zoneDetails.ZoneId, zoneName = zoneDetails.ZoneName, sensorId = zoneDetails.SensorId,
-            //    lastUpdate = DateTime.Now, curTemp = zoneDetails.CurrentTemperature, target = zoneDetails.Target,
-            //    min = zoneDetails.Min,
-            //    max = zoneDetails.Max, range = zoneDetails.TargetRange, heating = zoneDetails.Heating
-            //});
-            "UPDATE ZoneDetails SET ZoneName = @ZoneName, SensorId = @SensorId, LastUpdate = @LastUpdate, CurrentTemperature = @CurrentTemperature, Target = @Target, Min = @Min, Max = @Max, TargetRange = @TargetRange, Heating = @Heating WHERE ZoneId = @ZoneId",
- zoneDetails);
+                "UPDATE ZoneDetails SET ZoneName = @ZoneName, SensorId = @SensorId, LastUpdate = @LastUpdate, CurrentTemperature = @CurrentTemperature, Target = @Target, Min = @Min, Max = @Max, TargetRange = @TargetRange, Heating = @Heating, UseSensor = @UseSensor, Active = @Active, MqttTopic = @MqttTopic WHERE ZoneId = @ZoneId",
+                zoneDetails);
 
             return await GetZone(zoneDetails.ZoneId);
 
@@ -59,7 +51,7 @@ namespace SmartHomeApp.Repositories
             try
             {
                 using IDbConnection db = new MySqlConnection(_connectionString);
-                await db.ExecuteAsync("INSERT INTO ZoneDetails(ZoneId, ZoneName, SensorId, LastUpdate, TargetRange) VALUES  (@ZoneId, @ZoneName, @SensorId, @LastUpdate, @TargetRange )",
+                await db.ExecuteAsync("INSERT INTO ZoneDetails(ZoneId, ZoneName, MqttTopic, SensorId, LastUpdate, TargetRange) VALUES  (@ZoneId, @ZoneName, @MqttTopic, @SensorId, @LastUpdate, @TargetRange, @UseSensor )",
                     zoneDetails);
             }
             catch (Exception e)
@@ -68,6 +60,13 @@ namespace SmartHomeApp.Repositories
             }
 
             return await GetZone(zoneDetails.ZoneId);
+        }
+
+        public async Task DeleteZone(short zoneId)
+        {
+            using IDbConnection db = new MySqlConnection(_connectionString);
+            await db.ExecuteAsync("DELETE FROM ZoneDetails WHERE ZoneId = @id", new { id = zoneId });
+
         }
 
         public async Task<bool> ZoneExists(short zoneId)
