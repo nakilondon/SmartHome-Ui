@@ -9,6 +9,7 @@ import { IZone as Zone } from './zone';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ZoneService {
   constructor(private http: HttpClient, @Inject("BASE_URL") private baseUrl: string) { }
 

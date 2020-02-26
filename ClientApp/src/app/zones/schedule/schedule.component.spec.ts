@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduleComponent } from './schedule.component';
-import { scheduled } from 'rxjs';
+import { ScheduleComponent } from "./schedule.component";
 
 describe('ScheduleComponent', () => {
   let component: ScheduleComponent;

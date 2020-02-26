@@ -6,14 +6,14 @@ import { SharedModule } from '../shared/shared.module';
 
 // Imports for loading & configuring the in-memory web api
 //import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { ZoneData } from './zone-data';
+//import { ZoneData } from './zone-data';
 
 import { ZoneListComponent } from './zone-list.component';
 import { ZoneDetailComponent } from './zone-detail.component';
 import { ZoneEditComponent } from './zone-edit.component';
 import { ZoneEditGuard } from './zone-edit.guard';
-import { ScheduleComponent } from './schedule/schedule.component';
-import { scheduled } from 'rxjs';
+import { ScheduleComponent } from "./schedule/schedule.component";
+//import { scheduled } from 'rxjs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
