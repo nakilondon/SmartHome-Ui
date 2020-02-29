@@ -13,6 +13,8 @@ import { NgbdTimepickerBasic } from './timepicker-basic';
 import { NumberValidators } from 'src/app/shared/number.validator';
 import { stringify } from 'querystring';
 import { EventEmitter } from 'protractor';
+import { Time } from '@angular/common';
+import { scheduleTime } from './scheduleTime';
 
 @Component({
   selector: 'app-schedule',
@@ -59,27 +61,64 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       params => {
         const id = +params.get('id');
         this.getZone(id);
-        this.getSchedule(id, "ActiveDefault");
+        this.getSchedule(id, "HomeWeekday");
       });
 
     this.scheduleForm = this.fb.group({
-      mode: "ActiveDefault",
-      startTime: { hour: Number, minute: Number},
-      endTime: { hour: Number, minute: Number},
+      mode: "HomeWeekday",
+      startTime: scheduleTime,
+      endTime: scheduleTime,
       targetTemp: Number
     });
 
-    this.scheduleForm.patchValue({
-      defaultActive: 20,
-      defaultNonActive: 10
-    })
+  //  this.scheduleService.getSchedule(this.zone.id, this.scheduleForm.value.mode).subscribe({
+  //    next: schedules => {
+  //      this.schedules = schedules;
+  //    },
+  //    error: err => this.errorMessage = err
+  //  });
 
   }
+
+  changeMode(e){
+    this.getSchedule(this.zone.id, this.scheduleForm.value.mode)
+  }
+
   getZone(id: number) {
     this.zoneService.getZone(id).subscribe({
       next: zone => this.zone = zone,
       error: err => this.errorMessage = err
     });
+  }
+
+  addSchedule(){
+    const scheduleToAdd = new ISchedule;
+    
+    scheduleToAdd.startTime = this.timeToString(this.scheduleForm.value.startTime);
+    scheduleToAdd.endTime = this.timeToString(this.scheduleForm.value.endTime);
+    scheduleToAdd.targetTemp = this.scheduleForm.value.targetTemp;
+      
+    this.scheduleService.createSchedule(this.zone.id, this.scheduleForm.value.mode, scheduleToAdd)
+    .subscribe({
+      next: () => this.getSchedule(this.zone.id, this.scheduleForm.value.mode),
+      error: err => this.errorMessage = err
+      });
+
+    this.getSchedule(this.zone.id, this.scheduleForm.value.mode);
+  }
+
+  timeToString(timeNumber: scheduleTime): String{
+    var returnString = new String;
+
+    returnString = timeNumber.hour.toString() + ":";
+
+    if (timeNumber.minute < 10) {
+      returnString += "0";
+    }
+
+    returnString += timeNumber.minute.toString();
+
+    return returnString;
   }
 
   getSchedule(id: number, mode: string) {
@@ -88,51 +127,13 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       error: err => this.errorMessage = err
     })
   }
-
-  saveSchedule(): void {
-    if (this.scheduleForm.valid) {
-      if (this.scheduleForm.dirty) {
-        const p = { ...this.schedule, ...this.scheduleForm.value };
-
-        this.scheduleService.createSchedule(p)
-        .subscribe({
-          next: () => this.onSaveComplete(),
-          error: err => this.errorMessage = err
-        });
-
-        if (p.id === 0) {
-          this.scheduleService.createSchedule(p)
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: err => this.errorMessage = err
-            });
-        } else {
-          this.scheduleService.updateSchedule(p)
-            .subscribe({
-              next: () => this.onSaveComplete(),
-              error: err => this.errorMessage = err
-            });
-        }
-      } else {
-        this.onSaveComplete();
-      }
-    } else {
-      this.errorMessage = 'Please correct the validation errors.';
-    }
-  }
-
-  onSaveComplete(): void {
-    // Reset the form to clear the flags
-    this.scheduleForm.reset();
-    this.router.navigate(['/zones']);
-  }
-
-  buildSchedule(): FormGroup {
-    return this.fb.group({
-      startTime: {hour: 13, minute: 30},
-      endTime: {hour: 13, minute: 30},
-      targetTemp: 10
-    });
+  
+  deleteSchedule(scheduleId: number): void {
+    this.scheduleService.deleteSchedule(scheduleId)
+      .subscribe({
+        next: () => this.getSchedule(this.zone.id, this.scheduleForm.value.mode),
+        error: err => this.errorMessage = err
+      });
   }
 
   displaySchedule(schedule: ISchedule[]): void {

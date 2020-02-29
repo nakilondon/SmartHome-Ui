@@ -29,7 +29,7 @@ namespace SmartHomeApp
                 configuration.RootPath = "ClientApp/dist";
             });
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddSingleton<IZoneDataStore, ZoneDetailsSql>();
+            services.AddSingleton<IDataStore, DataStoreSql>();
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>

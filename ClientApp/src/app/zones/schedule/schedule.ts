@@ -1,5 +1,6 @@
-export interface ISchedule {
-    startTime: string;
-    endTime: string;
+export class ISchedule {
+    scheduleId: Number;
+    startTime: String;
+    endTime: String;
     targetTemp: number;
 }

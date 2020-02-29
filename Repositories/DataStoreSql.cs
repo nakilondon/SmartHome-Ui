@@ -8,11 +8,11 @@ using MySql.Data.MySqlClient;
 
 namespace SmartHomeApp.Repositories
 {
-    public class ZoneDetailsSql : IZoneDataStore
+    public class DataStoreSql : IDataStore
     {
         private readonly string _connectionString;
 
-        public ZoneDetailsSql(IConfiguration configuration)
+        public DataStoreSql(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
@@ -67,6 +67,44 @@ namespace SmartHomeApp.Repositories
             using IDbConnection db = new MySqlConnection(_connectionString);
             await db.ExecuteAsync("DELETE FROM ZoneDetails WHERE ZoneId = @id", new { id = zoneId });
 
+        }
+
+        public async Task AddSchedule(ScheduleDB scheduleDb)
+        {
+            try
+            {
+                using IDbConnection db = new MySqlConnection(_connectionString);
+                await db.ExecuteAsync(
+                    "INSERT INTO Schedules(ZoneId, Mode, TargetTemp, StartTime, EndTime) VALUES  (@ZoneId, @Mode, @TargetTemp, @StartTime, @EndTime )",
+                    scheduleDb);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+
+        public async Task<IEnumerable<ScheduleDB>> GetSchedule(short zoneId, string scheduleMode)
+        {
+            try
+            {
+                using IDbConnection db = new MySqlConnection(_connectionString);
+                 
+                return await db.QueryAsync<ScheduleDB>("SELECT * FROM Schedules WHERE ZoneId = @zoneId AND Mode = @mode",
+                    new {zoneId = zoneId, mode = scheduleMode});
+
+                
+            } catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task DeleteSchedule(short scheduleId)
+        {
+            using IDbConnection db = new MySqlConnection(_connectionString);
+            await db.ExecuteAsync("DELETE FROM Schedules WHERE ScheduleId = @ScheduleId",new {ScheduleId = scheduleId});
         }
 
         public async Task<bool> ZoneExists(short zoneId)

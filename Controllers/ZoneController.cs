@@ -13,13 +13,13 @@ namespace SmartHomeApp.Controllers
     public class ZoneController : ControllerBase
     {
         private readonly ILogger<ZoneController> _logger;
-        private readonly IZoneDataStore _zoneDataStore;
+        private readonly IDataStore _dataStore;
         private readonly IMapper _mapper;
 
-        public ZoneController(ILogger<ZoneController> logger, IZoneDataStore zoneDataStore, IMapper mapper)
+        public ZoneController(ILogger<ZoneController> logger, IDataStore dataStore, IMapper mapper)
         {
             _logger = logger;
-            _zoneDataStore = zoneDataStore;
+            _dataStore = dataStore;
             _mapper = mapper;
         }
 
@@ -28,7 +28,7 @@ namespace SmartHomeApp.Controllers
         {
             _logger.LogDebug("Get");
             var zones = new List<Zone>();
-            var zoneDetailsDb = await _zoneDataStore.GetAllZones();
+            var zoneDetailsDb = await _dataStore.GetAllZones();
 
             foreach (var zoneDetailDb in zoneDetailsDb)
             {
@@ -43,7 +43,7 @@ namespace SmartHomeApp.Controllers
         {
             _logger.LogDebug("Get");
 
-            var zoneDetailDb = await _zoneDataStore.GetZone(id);
+            var zoneDetailDb = await _dataStore.GetZone(id);
 
             return _mapper.Map<Zone>(zoneDetailDb);
         }
@@ -55,9 +55,9 @@ namespace SmartHomeApp.Controllers
 
             var zoneDb = _mapper.Map<ZoneDetailsDb>(zone);
 
-            await _zoneDataStore.UpdateZone(zoneDb);
+            await _dataStore.UpdateZone(zoneDb);
 
-            return _mapper.Map<Zone>(await _zoneDataStore.GetZone(zone.Id));
+            return _mapper.Map<Zone>(await _dataStore.GetZone(zone.Id));
         }
 
         [HttpPost("add")]
@@ -67,18 +67,18 @@ namespace SmartHomeApp.Controllers
 
             var zoneDb = _mapper.Map<ZoneDetailsDb>(zone);
 
-            var zoneDetailsDb = await _zoneDataStore.GetAllZones();
+            var zoneDetailsDb = await _dataStore.GetAllZones();
             zoneDb.ZoneId = (short)(zoneDetailsDb.Count() + 1);
 
-            await _zoneDataStore.AddZone(zoneDb);
+            await _dataStore.AddZone(zoneDb);
 
-            return _mapper.Map<Zone>(await _zoneDataStore.GetZone(zone.Id));
+            return _mapper.Map<Zone>(await _dataStore.GetZone(zone.Id));
         }
 
         [HttpDelete("{id}")]
         public async Task Delete(short id)
         {
-            await _zoneDataStore.DeleteZone(id);
+            await _dataStore.DeleteZone(id);
         }
     }
 }

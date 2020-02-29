@@ -6,10 +6,8 @@
   <div class="card-body">
     <form novalidate (ngSubmit)="saveSchedule()" [formGroup]="scheduleForm">
       <div class="form-group">
-        <select class="form-control" id="{{'typeId' + i}}" formControlName="mode">
+        <select class="form-control" id="{{'typeId' + i}}" (change)="changeMode($event)" formControlName="mode">
           <option value="" disabled selected hidden>Select a schedule mode...</option>
-          <option value="NonActive">Non Active</option>
-          <option value="ActiveDefault">Active Default</option>
           <option value="HomeWeekday">Home Weekday</option>
           <option value="HomeWeekend">Home Weekend</option>
           <option value="AwayWeekend">Away Weekend</option>
@@ -31,7 +29,7 @@
               <td>{{schedule.startTime}}</td>
               <td>{{schedule.endTime}}</td>
               <td>{{schedule.targetTemp}}</td>
-              <td><button class="btn btn-outline-primary" type="button" (click)="deleteSchedule(i)">
+              <td><button class="btn btn-outline-primary" type="button" (click)="deleteSchedule(schedule.scheduleId)">
                   Delete
                 </button></td>
             </tr>
@@ -61,10 +59,12 @@
               </td>
             </tr>
             <tr>
-              <button class="btn btn-primary mr-3" style="width:80px;" type="button" title="Finish your edits"
-                [routerLink]="['/zones']">
-                Done
-              </button>
+              <td>
+                <button class="btn btn-primary mr-3" style="width:80px;" type="button" title="Finish your edits"
+                  [routerLink]="['/zones']">
+                  Done
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -76,7 +76,3 @@
   <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}
   </div>
 </div>
-<br>Dirty: {{ scheduleForm.dirty }}
-<br>Touched: {{ scheduleForm.touched }}
-<br>Valid: {{ scheduleForm.valid }}
-<br>Value: {{ scheduleForm.value | json }}

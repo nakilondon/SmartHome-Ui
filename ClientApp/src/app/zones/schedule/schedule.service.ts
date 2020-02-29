@@ -15,14 +15,6 @@ export class ScheduleService {
 
   private scheduleUrl = this.baseUrl;
 
-//  getSchedule(): Observable<Schedule> {
-//      return this.http.get<Schedule>(this.scheduleUrl + 'schedule')
-//      .pipe(
-//        tap(data => console.log(JSON.stringify(data))),
-//        catchError(this.handleError)
-//      );
-//  }
-
   getSchedule(id: number, mode: string): Observable<Schedule[]> {
     if (id === 0) {
       return of(this.initializeZone());
@@ -32,20 +24,16 @@ export class ScheduleService {
       .pipe(
         tap(data => console.log('getSchedule: ' + JSON.stringify(data))),
         catchError(this.handleError)
-       // map(response => response.map(data => data.))
       );
   }
 
-  createSchedule(schedule: Schedule): Observable<Schedule> {
+  createSchedule(id: number, mode: string, schedule: Schedule): Observable<{}> {
+    schedule.scheduleId = 0;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-   // zone.id = null;
-      //schedule.lastUpdate = '15/11/2019 22:05:05';
+    const url = `${this.scheduleUrl}schedule/${id}/${mode}`;
 
-    return this.http.post<Schedule>(this.scheduleUrl + "schedule/add", schedule, { headers })
-      .pipe(
-        tap(data => console.log('createSchedule: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+    return  this.http.post(url, schedule, { headers });
+    
   }
 
   deleteSchedule(id: number): Observable<{}> {
@@ -89,6 +77,7 @@ export class ScheduleService {
   private initializeZone(): Schedule[] {
     // Return an initialized object
     return [{
+      scheduleId: 0,
       startTime: "00:00",
       endTime: "00:00",
       targetTemp: 20

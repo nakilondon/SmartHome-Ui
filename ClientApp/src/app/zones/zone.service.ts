@@ -37,8 +37,7 @@ export class ZoneService {
 
   createZone(zone: Zone): Observable<Zone> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-   // zone.id = null;
-      zone.lastUpdate = '15/11/2019 22:05:05';
+    zone.lastUpdate = '15/11/2019 22:05:05';
 
     return this.http.post<Zone>(this.zonesUrl + "zone/add", zone, { headers })
       .pipe(
