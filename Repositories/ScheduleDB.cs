@@ -12,13 +12,7 @@ namespace SmartHomeApp.Repositories
         AwayWeekend,
         AwayWeekday
     }
-
-    public class ScheduleTime
-    {
-        public short Hour { get; set; }
-        public short Minute { get; set; }
-    }
-
+    
     public class ScheduleDB
     {
         public short ScheduleId { get; set; }

@@ -71,13 +71,6 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       targetTemp: Number
     });
 
-  //  this.scheduleService.getSchedule(this.zone.id, this.scheduleForm.value.mode).subscribe({
-  //    next: schedules => {
-  //      this.schedules = schedules;
-  //    },
-  //    error: err => this.errorMessage = err
-  //  });
-
   }
 
   changeMode(e){
@@ -109,8 +102,13 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   timeToString(timeNumber: scheduleTime): String{
     var returnString = new String;
-
-    returnString = timeNumber.hour.toString() + ":";
+    
+    returnString = "";
+    
+    if (timeNumber.hour < 10) {
+      returnString = "0";
+    }
+    returnString += timeNumber.hour.toString() + ":";
 
     if (timeNumber.minute < 10) {
       returnString += "0";

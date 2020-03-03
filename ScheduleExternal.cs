@@ -1,6 +1,6 @@
 namespace SmartHomeApp
 {
-    public class Schedule
+    public class ScheduleExternal
     {
         public short ScheduleId { get; set; }
         public string StartTime { get; set; }

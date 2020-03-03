@@ -32,7 +32,11 @@ export class ScheduleService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.scheduleUrl}schedule/${id}/${mode}`;
 
-    return  this.http.post(url, schedule, { headers });
+    return  this.http.post(url, schedule, { headers })
+      .pipe(
+        tap(data => console.log('createSchedule: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
     
   }
 
@@ -68,7 +72,7 @@ export class ScheduleService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      errorMessage = `Backend returned code ${err.status}: ${err.body.error}`;
+      errorMessage = `Backend returned code ${err.status}: ${err.error}`;
     }
     console.error(err);
     return throwError(errorMessage);

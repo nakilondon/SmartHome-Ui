@@ -39,6 +39,8 @@ namespace SmartHomeApp
 
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
+
+            services.AddSingleton<ScheduleUtils>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

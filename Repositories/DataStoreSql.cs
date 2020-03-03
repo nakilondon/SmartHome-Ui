@@ -91,7 +91,7 @@ namespace SmartHomeApp.Repositories
             {
                 using IDbConnection db = new MySqlConnection(_connectionString);
                  
-                return await db.QueryAsync<ScheduleDB>("SELECT * FROM Schedules WHERE ZoneId = @zoneId AND Mode = @mode",
+                return await db.QueryAsync<ScheduleDB>("SELECT * FROM Schedules WHERE ZoneId = @zoneId AND Mode = @mode ORDER BY StartTime",
                     new {zoneId = zoneId, mode = scheduleMode});
 
                 
@@ -105,6 +105,14 @@ namespace SmartHomeApp.Repositories
         {
             using IDbConnection db = new MySqlConnection(_connectionString);
             await db.ExecuteAsync("DELETE FROM Schedules WHERE ScheduleId = @ScheduleId",new {ScheduleId = scheduleId});
+        }
+
+        public async Task UpdateSchedule(ScheduleDB scheduleDb)
+        {
+            using IDbConnection db = new MySqlConnection(_connectionString);
+            await db.ExecuteAsync(
+                "UPDATE Schedules SET StartTime = @StartTime, EndTime = @EndTime, TargetTemp = @TargetTemp WHERE ScheduleId = @ScheduleId",
+                scheduleDb);
         }
 
         public async Task<bool> ZoneExists(short zoneId)

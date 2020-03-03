@@ -13,5 +13,6 @@ namespace SmartHomeApp.Repositories
         Task AddSchedule(ScheduleDB scheduleDb);
         Task<IEnumerable<ScheduleDB>> GetSchedule(short zoneId, string scheduleMode);
         Task DeleteSchedule(short scheduleId);
+        Task UpdateSchedule(ScheduleDB scheduleDb);
     }
 }
